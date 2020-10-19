@@ -1,5 +1,5 @@
 # SpotifyAPI---Creating-CSV-Dataset
-This program will get data directly from Spotify using Spotipy and export in CSV format.
+This program will get data directly from Spotify using Spotipy and export it in CSV format.
 
 Description: <br>
     This program get tracks information directly from Spotify API using Spotipy. <br>
