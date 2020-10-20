@@ -24,16 +24,9 @@ from cleantext import clean
         result       ->  The generated string
 """
 def data_preprocessing(input_str):
-    #Remove only pontuation
-    #result = input_str.translate(str.maketrans('', '', string.punctuation))
-    
-    #Remove Non-Printable characteres
-    #printable = set(string.printable)
-    #result = ''.join(filter(lambda x: x in printable, input_str))
-    
     result = clean(input_str,
-        fix_unicode=True,               # fix various unicode errors
-        to_ascii=True,                  # transliterate to closest ASCII representation
+        fix_unicode=False,               # fix various unicode errors
+        to_ascii=False,                  # transliterate to closest ASCII representation
         lower=False,                    # lowercase text
         no_line_breaks=False,           # fully strip line breaks as opposed to only normalizing them
         no_urls=False,                  # replace all URLs with a special token
@@ -42,7 +35,7 @@ def data_preprocessing(input_str):
         no_numbers=False,               # replace all numbers with a special token
         no_digits=False,                # replace all digits with a special token
         no_currency_symbols=False,      # replace all currency symbols with a special token
-        no_punct=False,                 # fully remove punctuation
+        no_punct=True,                 # fully remove punctuation
         replace_with_url="<URL>",
         replace_with_email="<EMAIL>",
         replace_with_phone_number="<PHONE>",
@@ -93,11 +86,11 @@ def getTrackData(sp, track_id, csv_file):
     features = sp.audio_features(track_id)
     
     # meta
-    track_name = meta['name'] #Remove Non-Ascii Characters
+    track_name = data_preprocessing(meta['name']) #Preprocess String
     track_id = meta['id']
-    album_name = meta['album']['name'] #Remove Non-Ascii Characters
+    album_name = data_preprocessing(meta['album']['name']) #Preprocess String
     album_id = meta['album']['id']
-    artist_name = meta['album']['artists'][0]['name'] #Remove Non-Ascii Characters
+    artist_name = data_preprocessing(meta['album']['artists'][0]['name']) #Preprocess String
     artist_id = meta['album']['artists'][0]['id']
     release_date = meta['album']['release_date']
     length = meta['duration_ms']
